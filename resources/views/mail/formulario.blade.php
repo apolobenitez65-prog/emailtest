@@ -6,14 +6,13 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+        content="width=device-width, initial-scale=1.0">
 
     <title>Enviar correo</title>
 
     @vite([
-        'resources/css/app.css',
-        'resources/js/app.js'
+    'resources/css/app.css',
+    'resources/js/app.js'
     ])
 </head>
 
@@ -39,8 +38,8 @@
             {{-- Mensaje exitoso --}}
             @if (session('success'))
 
-                <div
-                    class="
+            <div
+                class="
                         mb-5
                         p-4
                         rounded-lg
@@ -48,18 +47,17 @@
                         border
                         border-green-300
                         text-green-800
-                    "
-                >
-                    {{ session('success') }}
-                </div>
+                    ">
+                {{ session('success') }}
+            </div>
 
             @endif
 
             {{-- Mensaje de error --}}
             @if (session('error'))
 
-                <div
-                    class="
+            <div
+                class="
                         mb-5
                         p-4
                         rounded-lg
@@ -67,18 +65,17 @@
                         border
                         border-red-300
                         text-red-800
-                    "
-                >
-                    {{ session('error') }}
-                </div>
+                    ">
+                {{ session('error') }}
+            </div>
 
             @endif
 
             {{-- Errores de validación --}}
             @if ($errors->any())
 
-                <div
-                    class="
+            <div
+                class="
                         mb-5
                         p-4
                         rounded-lg
@@ -86,20 +83,19 @@
                         border
                         border-red-300
                         text-red-800
-                    "
-                >
-                    <ul class="list-disc pl-5">
+                    ">
+                <ul class="list-disc pl-5">
 
-                        @foreach ($errors->all() as $error)
+                    @foreach ($errors->all() as $error)
 
-                            <li>
-                                {{ $error }}
-                            </li>
+                    <li>
+                        {{ $error }}
+                    </li>
 
-                        @endforeach
+                    @endforeach
 
-                    </ul>
-                </div>
+                </ul>
+            </div>
 
             @endif
 
@@ -108,8 +104,7 @@
 
                 <form
                     action="{{ route('mail.enviar') }}"
-                    method="POST"
-                >
+                    method="POST">
 
                     @csrf
 
@@ -118,8 +113,7 @@
 
                         <label
                             for="destinatario"
-                            class="block mb-2 font-semibold text-gray-700"
-                        >
+                            class="block mb-2 font-semibold text-gray-700">
                             Correo destinatario
                         </label>
 
@@ -140,14 +134,13 @@
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-blue-500
-                            "
-                        >
+                            ">
 
                         @error('destinatario')
 
-                            <p class="text-red-500 text-sm mt-1">
-                                {{ $message }}
-                            </p>
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
 
                         @enderror
 
@@ -158,8 +151,7 @@
 
                         <label
                             for="nombre"
-                            class="block mb-2 font-semibold text-gray-700"
-                        >
+                            class="block mb-2 font-semibold text-gray-700">
                             Nombre del destinatario
                         </label>
 
@@ -180,26 +172,57 @@
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-blue-500
-                            "
-                        >
+                            ">
 
                         @error('nombre')
 
-                            <p class="text-red-500 text-sm mt-1">
-                                {{ $message }}
-                            </p>
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
 
                         @enderror
 
                     </div>
+                    {{-- Teléfono --}}
+                    <div class="mb-5">
 
+                        <label
+                            for="telefono"
+                            class="block mb-2 font-semibold text-gray-700">
+                            Teléfono
+                        </label>
+
+                        <input
+                            type="text"
+                            id="telefono"
+                            name="telefono"
+                            value="{{ old('telefono') }}"
+                            placeholder="3704418207"
+                            class="
+            w-full
+            px-4
+            py-3
+            border
+            border-gray-300
+            rounded-lg
+            focus:outline-none
+            focus:ring-2
+            focus:ring-blue-500
+        ">
+
+                        @error('telefono')
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
+                        @enderror
+
+                    </div>
                     {{-- Asunto --}}
                     <div class="mb-5">
 
                         <label
                             for="asunto"
-                            class="block mb-2 font-semibold text-gray-700"
-                        >
+                            class="block mb-2 font-semibold text-gray-700">
                             Asunto
                         </label>
 
@@ -220,14 +243,13 @@
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-blue-500
-                            "
-                        >
+                            ">
 
                         @error('asunto')
 
-                            <p class="text-red-500 text-sm mt-1">
-                                {{ $message }}
-                            </p>
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
 
                         @enderror
 
@@ -238,8 +260,7 @@
 
                         <label
                             for="mensaje"
-                            class="block mb-2 font-semibold text-gray-700"
-                        >
+                            class="block mb-2 font-semibold text-gray-700">
                             Mensaje
                         </label>
 
@@ -260,14 +281,13 @@
                                 focus:outline-none
                                 focus:ring-2
                                 focus:ring-blue-500
-                            "
-                        >{{ old('mensaje') }}</textarea>
+                            ">{{ old('mensaje') }}</textarea>
 
                         @error('mensaje')
 
-                            <p class="text-red-500 text-sm mt-1">
-                                {{ $message }}
-                            </p>
+                        <p class="text-red-500 text-sm mt-1">
+                            {{ $message }}
+                        </p>
 
                         @enderror
 
@@ -286,8 +306,7 @@
                             px-6
                             rounded-lg
                             transition
-                        "
-                    >
+                        ">
                         Enviar correo
                     </button>
 

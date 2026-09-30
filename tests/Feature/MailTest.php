@@ -72,23 +72,25 @@ class MailTest extends TestCase
         );
     }
     //test 6
+    // test 6
     public function test_mailable_recibe_los_datos_correctos(): void
     {
         Mail::fake();
+
         $this->post('/mail/enviar', [
             'destinatario' => 'alumno@example.com',
             'nombre' => 'María López',
             'asunto' => 'Aviso importante',
             'mensaje' => 'La clase comienza a las 14 horas.'
         ]);
+
         Mail::assertSent(
             TestBrevoMail::class,
             function ($mail) {
                 return
                     $mail->nombre === 'María López' &&
                     $mail->asunto === 'Aviso importante' &&
-                    $mail->mensaje === 'La clase comienza a las 14
-horas.';
+                    $mail->mensaje === 'La clase comienza a las 14 horas.';
             }
         );
     }
@@ -104,5 +106,35 @@ horas.';
             'mensaje' => ''
         ]);
         Mail::assertNothingSent();
+    }
+    // test 8
+    public function test_telefono_no_puede_tener_menos_de_8_caracteres(): void
+    {
+        Mail::fake();
+
+        $response = $this->post('/mail/enviar', [
+            'destinatario' => 'alumno@example.com',
+            'nombre' => 'Juan Pérez',
+            'telefono' => '123',
+            'asunto' => 'Prueba',
+            'mensaje' => 'Mensaje de prueba'
+        ]);
+
+        $response->assertSessionHasErrors('telefono');
+    }
+    // test 9
+    public function test_telefono_valido_no_genera_error(): void
+    {
+        Mail::fake();
+
+        $response = $this->post('/mail/enviar', [
+            'destinatario' => 'alumno@example.com',
+            'nombre' => 'Juan Pérez',
+            'telefono' => '3704123456',
+            'asunto' => 'Prueba',
+            'mensaje' => 'Mensaje de prueba'
+        ]);
+
+        $response->assertSessionDoesntHaveErrors('telefono');
     }
 }
